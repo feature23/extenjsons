@@ -21,14 +21,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. */
 
 'use strict';
-//var  Extenjsons = Extenjsons || {};
 
-var exports = module.exports = {};
-exports.version = '0.1.0';
+//TODO: Discuss usage of CommonJS practices
+//var exports = module.exports = {};
+
+var Extenjsons = Extenjsons || {};
+Extenjsons.version = '0.1.0';
 
 
-exports.Flux = exports.Flux || {};
-exports.Flux.uuid = function() {
+Extenjsons.Flux = Extenjsons.Flux || {};
+Extenjsons.Flux.uuid = function() {
         var i, random;
         var uuid = '';
         for (i = 0; i < 32; i++) {
@@ -42,8 +44,8 @@ exports.Flux.uuid = function() {
         return uuid;
 };
 
-exports.Array = exports.Array || {};
-exports.Array.remove = function(arr, predicate) {
+Extenjsons.Array = Extenjsons.Array || {};
+Extenjsons.Array.remove = function(arr, predicate) {
     var removeIndex = -1;
     var count = arr.length;
 
@@ -57,10 +59,11 @@ exports.Array.remove = function(arr, predicate) {
     if(removeIndex > -1) {
         arr.splice(removeIndex, 1);
     }  else {
-        exports.Error.throw('Object Not Found in Array');
+        Extenjsons.Error.throw('Object Not Found in Array');
     }
 };
-exports.Array.insertBefore = function(arr, obj, predicate) {
+
+Extenjsons.Array.insertBefore = function(arr, obj, predicate) {
     var insertIndex = -1;
     var count = arr.length;
 
@@ -75,7 +78,8 @@ exports.Array.insertBefore = function(arr, obj, predicate) {
         arr.splice(insertIndex, 0, obj);
     }
 };
-exports.Array.insertAfter = function(arr, obj, predicate) {
+
+Extenjsons.Array.insertAfter = function(arr, obj, predicate) {
     var insertIndex = -1;
     var count = arr.length;
 
@@ -89,10 +93,11 @@ exports.Array.insertAfter = function(arr, obj, predicate) {
     if(insertIndex > -1) {
         arr.splice(insertIndex + 1, 0, obj);
     } else {
-        exports.Error.throw('Object Not Found in Array');
+        Extenjsons.Error.throw('Object Not Found in Array');
     }
 };
-exports.Array.toArray = function(obj) {
+
+Extenjsons.Array.toArray = function(obj) {
     var arr = [];
 
     if(obj) {
@@ -102,24 +107,25 @@ exports.Array.toArray = function(obj) {
             }
         }
     } else {
-        exports.Error.throw('The Object passed to Extenjsons.toArray was null or undefined');
+        Extenjsons.Error.throw('The Object passed to Extenjsons.toArray was null or undefined');
     }
 
     return arr;
 };
 
-exports.URL = exports.URL || {};
-exports.URL.getParameterByName = function(parameterName) {
+Extenjsons.URL = Extenjsons.URL || {};
+Extenjsons.URL.getParameterByName = function(parameterName) {
     parameterName = parameterName.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + parameterName + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-exports.Date = exports.Date || {};
+Extenjsons.Date = Extenjsons.Date || {};
 
-exports.Format = exports.Format || {};
-exports.Format.formatDecimalAsString = function(num, places) {
+Extenjsons.Format = Extenjsons.Format || {};
+
+Extenjsons.Format.formatDecimalAsString = function(num, places) {
     if(num) {
         return num.toFixed(places).replace(/(\d)(?=(\d{3})+\.\d\d$)/g,"$1,");
     } else {
@@ -127,7 +133,7 @@ exports.Format.formatDecimalAsString = function(num, places) {
     }
 };
 
-exports.Format.formatDecimal = function(num, places) {
+Extenjsons.Format.formatDecimal = function(num, places) {
     if(num) {
         return parseFloat(num.toFixed(places));
     } else {
@@ -135,8 +141,9 @@ exports.Format.formatDecimal = function(num, places) {
     }
 };
 
-exports.Error = exports.Error || {};
-exports.Error.throw = function(message) {
+Extenjsons.Error = Extenjsons.Error || {};
+
+Extenjsons.Error.throw = function(message) {
 
     message = message || 'Error';
 
@@ -145,10 +152,11 @@ exports.Error.throw = function(message) {
     }
 
     throw message;
-}
+};
 
-exports.Test = exports.Test || {};
-exports.Test.assert = function(condition, message) {
+Extenjsons.Test = Extenjsons.Test || {};
+
+Extenjsons.Test.assert = function(condition, message) {
     if(condition) {
         return true;
     } else {
