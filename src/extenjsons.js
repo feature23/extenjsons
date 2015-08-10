@@ -21,11 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE. */
 
 'use strict';
-var  Extenjsons = Extenjsons || {};
-Extenjsons.version = '0.1.0';
+//var  Extenjsons = Extenjsons || {};
 
-Extenjsons.Flux = Extenjsons.Flux || {};
-Extenjsons.Flux.uuid = function() {
+var exports = module.exports = {};
+exports.version = '0.1.0';
+
+
+exports.Flux = exports.Flux || {};
+exports.Flux.uuid = function() {
         var i, random;
         var uuid = '';
         for (i = 0; i < 32; i++) {
@@ -39,8 +42,8 @@ Extenjsons.Flux.uuid = function() {
         return uuid;
 };
 
-Extenjsons.Array = Extenjsons.Array || {};
-Extenjsons.Array.remove = function(arr, predicate) {
+exports.Array = exports.Array || {};
+exports.Array.remove = function(arr, predicate) {
     var removeIndex = -1;
     var count = arr.length;
 
@@ -53,24 +56,11 @@ Extenjsons.Array.remove = function(arr, predicate) {
 
     if(removeIndex > -1) {
         arr.splice(removeIndex, 1);
+    }  else {
+        exports.Error.throw('Object Not Found in Array');
     }
 };
-Extenjsons.Array.insertBefore = function(arr, obj, predicate) {
-    var insertIndex = -1;
-    var count = arr.length;
-
-    while(count--) {
-        if(predicate(arr[count])){
-            insertIndex = count;
-            break;
-        }
-    }
-
-    if(insertIndex > -1) {
-        arr.splice(insertIndex - 1, 0, obj);
-    }
-};
-Extenjsons.Array.insertAfter = function(arr, obj, predicate) {
+exports.Array.insertBefore = function(arr, obj, predicate) {
     var insertIndex = -1;
     var count = arr.length;
 
@@ -85,30 +75,51 @@ Extenjsons.Array.insertAfter = function(arr, obj, predicate) {
         arr.splice(insertIndex, 0, obj);
     }
 };
-Extenjsons.Array.toArray = function(obj) {
+exports.Array.insertAfter = function(arr, obj, predicate) {
+    var insertIndex = -1;
+    var count = arr.length;
+
+    while(count--) {
+        if(predicate(arr[count])){
+            insertIndex = count;
+            break;
+        }
+    }
+
+    if(insertIndex > -1) {
+        arr.splice(insertIndex + 1, 0, obj);
+    } else {
+        exports.Error.throw('Object Not Found in Array');
+    }
+};
+exports.Array.toArray = function(obj) {
     var arr = [];
 
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key)){
-            arr.push(obj[key]);
+    if(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key)){
+                arr.push(obj[key]);
+            }
         }
+    } else {
+        exports.Error.throw('The Object passed to Extenjsons.toArray was null or undefined');
     }
 
     return arr;
 };
 
-Extenjsons.URL = Extenjsons.URL || {};
-Extenjsons.URL.getParameterByName = function(parameterName) {
+exports.URL = exports.URL || {};
+exports.URL.getParameterByName = function(parameterName) {
     parameterName = parameterName.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + parameterName + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
-Extenjsons.Date = Extenjsons.Date || {};
+exports.Date = exports.Date || {};
 
-Extenjsons.Format = Extenjsons.Format || {};
-Extenjsons.Format.formatDecimalAsString = function(num, places) {
+exports.Format = exports.Format || {};
+exports.Format.formatDecimalAsString = function(num, places) {
     if(num) {
         return num.toFixed(places).replace(/(\d)(?=(\d{3})+\.\d\d$)/g,"$1,");
     } else {
@@ -116,7 +127,7 @@ Extenjsons.Format.formatDecimalAsString = function(num, places) {
     }
 };
 
-Extenjsons.Format.formatDecimal = function(num, places) {
+exports.Format.formatDecimal = function(num, places) {
     if(num) {
         return parseFloat(num.toFixed(places));
     } else {
@@ -124,16 +135,27 @@ Extenjsons.Format.formatDecimal = function(num, places) {
     }
 };
 
-Extenjsons.Test = Extenjsons.Test || {};
-Extenjsons.Test.assert = function(condition, message) {
-    if(!condition) {
-        message = message || 'Assertion Failed';
+exports.Error = exports.Error || {};
+exports.Error.throw = function(message) {
 
-        if(typeof Error !== 'undefined') {
-            throw new Error('Assertion Failed: ' + message);
-        }
+    message = message || 'Error';
 
-        throw message;
+    if(typeof Error !== 'undefined') {
+        throw new Error('Assertion Failed: ' + message);
+    }
+
+    throw message;
+}
+
+exports.Test = exports.Test || {};
+exports.Test.assert = function(condition, message) {
+    if(condition) {
+        return true;
+    } else {
+        message = message || 'No Message Provided';
+        console.log('Assertion Failed for: ' + message);
+        return false;
     }
 };
+
 
