@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+<script src="src/extenjsons.js"></script>
+<script>
+    var arr = [1,2,3,4,5];
+
+    console.log(arr);
+
+    Extenjsons.Array.insertBefore(arr, 8, function(item){
+        return item === 3;
+    });
+
+    console.log(arr);
+</script>
+</body>
+</html>
