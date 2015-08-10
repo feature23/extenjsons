@@ -108,7 +108,7 @@ Extenjsons.URL.getParameterByName = function(parameterName) {
 Extenjsons.Date = Extenjsons.Date || {};
 
 Extenjsons.Format = Extenjsons.Format || {};
-Extenjsons.Format.formatDecimal = function(num, places) {
+Extenjsons.Format.formatDecimalAsString = function(num, places) {
     if(num) {
         return num.toFixed(places).replace(/(\d)(?=(\d{3})+\.\d\d$)/g,"$1,");
     } else {
@@ -116,6 +116,24 @@ Extenjsons.Format.formatDecimal = function(num, places) {
     }
 };
 
+Extenjsons.Format.formatDecimal = function(num, places) {
+    if(num) {
+        return parseFloat(num.toFixed(places));
+    } else {
+        return 0;
+    }
+};
 
+Extenjsons.Test = Extenjsons.Test || {};
+Extenjsons.Test.assert = function(condition, message) {
+    if(!condition) {
+        message = message || 'Assertion Failed';
 
+        if(typeof Error !== 'undefined') {
+            throw new Error('Assertion Failed: ' + message);
+        }
+
+        throw message;
+    }
+};
 
