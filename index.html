@@ -2,21 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-
+    <title>extenjsons</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<script src="src/extenjsons.js"></script>
-<script>
-    var arr = [1,2,3,4,5];
 
-    console.log(arr);
+    <header id="header">
+        <span id="title">
+            extenjsons
+        </span>
+        <ul id="links">
+            <li><a href="#docs">docs</a></li>
+            <li><a href="#github">github</a></li>
+            <li><a href="#about">about</a></li>
+            <li><a href="#download">download</a></li>
+        </ul>
+    </header>
 
-    Extenjsons.Array.insertBefore(arr, 8, function(item){
-        return item === 3;
-    });
+    <section id="main">
 
-    console.log(arr);
-</script>
+        <section id="docs" class="page">
+            Docs
+        </section>
+
+        <section id="github" class="page">
+            Just needs to be a GitHub link
+        </section>
+
+        <section id="about" class="page">
+            About the Project
+        </section>
+
+        <section id="download" class="page">
+            Just needs to be a download link
+        </section>
+
+    </section>
+
+    <footer id="footer"></footer>
+
+    <script>
+
+        onNavigation();
+
+        function onNavigation() {
+
+            var links = document.querySelector('#links').children;
+            var loc = location.hash.substring(1);
+
+
+            for(var i = 0; i < links.length; i++) {
+                if(loc === links[i].innerText){
+                    links[i].className += ' active';
+                } else {
+                    links[i].className = '';
+                }
+            }
+
+            if(loc && loc.length) {
+                var pages = document.querySelector('#main').children;
+
+                for(var i = 0; i < pages.length; i++){
+                    if(pages[i].id === loc) {
+                        pages[i].className += ' active';
+                    } else {
+                        pages[i].className = 'page';
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('hashchange', onNavigation, false);
+    </script>
 </body>
 </html>
